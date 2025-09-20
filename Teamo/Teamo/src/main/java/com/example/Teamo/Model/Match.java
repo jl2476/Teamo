@@ -29,12 +29,15 @@ public class Match {
     @JoinColumn(name = "user2_id", nullable = false)
     private User user2;
 
+    // The time the match was created
     @Column(nullable = false)
     private LocalDateTime matchedAt;
 
+    // The time the match was last interacted with
     @Column
     private LocalDateTime lastInteraction;
 
+    // Whether the match is active or not
     @Column(nullable = false)
     private boolean isActive = true;
 

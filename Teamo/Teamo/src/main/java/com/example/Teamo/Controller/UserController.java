@@ -1,9 +1,8 @@
-package com.example.Teamo.controller;
+package com.example.Teamo.Controller;
 
-import com.example.Teamo.model.User;
-import com.example.Teamo.service.UserService;
+import com.example.Teamo.Model.User;
+import com.example.Teamo.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +13,6 @@ import java.util.Optional;
  * REST Controller for User-related operations.
  * Handles user profile management, search, and discovery features.
  *
- * @author Teamo Development Team
  */
 @RestController
 @RequestMapping("/api/users")
@@ -47,7 +45,14 @@ public class UserController {
     @GetMapping("/me")
     public ResponseEntity<User> getCurrentUser() {
         // TODO: Implement authentication and get current user
-        return ResponseEntity.ok(new User());
+        // For now, return a placeholder - this should be replaced with proper authentication
+        User placeholderUser = new User();
+        placeholderUser.setId(1L);
+        placeholderUser.setEmail("placeholder@example.com");
+        placeholderUser.setFirstName("Placeholder");
+        placeholderUser.setLastName("User");
+        placeholderUser.setBio("This is a placeholder user");
+        return ResponseEntity.ok(placeholderUser);
     }
 
     /**

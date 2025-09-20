@@ -70,8 +70,9 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<SwipeAction> swipeActions;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Match> matches;
+    // Note: Removed the matches relationship mapping since Match entity uses user1/user2 pattern
+    // The relationship is still accessible through Match.user1 and Match.user2
+    // private List<Match> matches;
 
     // Constructors
     public User() {
@@ -223,13 +224,8 @@ public class User {
         this.swipeActions = swipeActions;
     }
 
-    public List<Match> getMatches() {
-        return matches;
-    }
-
-    public void setMatches(List<Match> matches) {
-        this.matches = matches;
-    }
+    // Note: Removed matches getter/setter since the field was removed
+    // The relationship is still accessible through Match.user1 and Match.user2
 
     /**
      * Get the user's full name

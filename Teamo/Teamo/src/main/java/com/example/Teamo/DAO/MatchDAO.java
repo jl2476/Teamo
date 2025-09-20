@@ -1,4 +1,4 @@
-package com.example.Teamo.dao;
+package com.example.Teamo.DAO;
 
 import com.example.Teamo.Model.Match;
 import com.example.Teamo.Model.User;

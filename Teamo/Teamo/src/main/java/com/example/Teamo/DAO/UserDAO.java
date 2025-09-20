@@ -1,4 +1,4 @@
-package com.example.Teamo.dao;
+package com.example.Teamo.DAO;
 
 import com.example.Teamo.Model.User;
 import com.example.Teamo.Model.Skill;
@@ -156,8 +156,10 @@ public interface UserDAO extends JpaRepository<User, Long> {
     List<User> findRecentlyActiveUsers(@Param("limit") int limit);
 
     /**
-     * Count total number of active users
-     * @return count of active users
+     * Count matches for a specific user (either as user1 or user2)
+     * @param userId the user ID
+     * @return count of matches for the user
      */
-    long countByIsActiveTrue();
+    @Query("SELECT COUNT(m) FROM Match m WHERE (m.user1.id = :userId OR m.user2.id = :userId) AND m.isActive = true")
+    long countMatchesForUser(@Param("userId") Long userId);
 }
