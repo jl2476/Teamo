@@ -67,9 +67,6 @@ public class User {
     @JoinTable(name = "user_skills", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "skill_id"))
     private Set<Skill> skills;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<SwipeAction> swipeActions;
-
     // Note: Removed the matches relationship mapping since Match entity uses user1/user2 pattern
     // The relationship is still accessible through Match.user1 and Match.user2
     // private List<Match> matches;
@@ -216,13 +213,6 @@ public class User {
         this.skills = skills;
     }
 
-    public List<SwipeAction> getSwipeActions() {
-        return swipeActions;
-    }
-
-    public void setSwipeActions(List<SwipeAction> swipeActions) {
-        this.swipeActions = swipeActions;
-    }
 
     // Note: Removed matches getter/setter since the field was removed
     // The relationship is still accessible through Match.user1 and Match.user2
