@@ -124,18 +124,7 @@ public class UserController {
     public ResponseEntity<List<User>> getRecentlyActiveUsers(@RequestParam(defaultValue = "20") int limit) {
         List<User> users = userService.findRecentlyActiveUsers(limit);
         return ResponseEntity.ok(users);
-    }
-
-    /**
-     * Get users who haven't been swiped on by the current user
-     * @param userId the current user ID
-     * @return list of unswiped users
-     */
-    @GetMapping("/{userId}/discover")
-    public ResponseEntity<List<User>> getDiscoverableUsers(@PathVariable Long userId) {
-        List<User> users = userService.findUnswipedUsers(userId);
-        return ResponseEntity.ok(users);
-    }
+    }                                                                                                                           
 
     /**
      * Deactivate user account

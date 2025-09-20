@@ -17,7 +17,7 @@ import java.util.Set;
  *
  * @author Teamo Development Team
  */
-@Repository
+@Repository                                                                                       
 public interface UserDAO extends JpaRepository<User, Long> {
 
     /**
@@ -116,14 +116,6 @@ public interface UserDAO extends JpaRepository<User, Long> {
     @Query("SELECT u FROM User u WHERE u.id != :userId AND u.isActive = true")
     List<User> findOtherActiveUsers(@Param("userId") Long userId);
 
-    /**
-     * Find users who haven't been swiped on by the current user
-     * @param userId the current user's ID
-     * @return list of users not yet swiped on
-     */
-    @Query("SELECT u FROM User u WHERE u.id != :userId AND u.isActive = true " +
-           "AND u.id NOT IN (SELECT sa.targetUser.id FROM SwipeAction sa WHERE sa.user.id = :userId)")
-    List<User> findUnswipedUsersForUser(@Param("userId") Long userId);
 
     /**
      * Find users with skills matching the current user's interests

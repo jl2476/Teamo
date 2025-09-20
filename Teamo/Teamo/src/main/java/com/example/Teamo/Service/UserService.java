@@ -123,14 +123,7 @@ public class UserService {
         return users.stream().limit(limit).collect(Collectors.toList());
     }
 
-    /**
-     * Find users who haven't been swiped on by the current user
-     * @param userId the current user ID
-     * @return list of unswiped users
-     */
-    public List<User> findUnswipedUsers(Long userId) {
-        return userDAO.findUnswipedUsersForUser(userId);
-    }
+
 
     /**
      * Deactivate a user account
@@ -175,7 +168,7 @@ public class UserService {
             stats.setTotalPortfolioItems(user.getPortfolioItems() != null ? user.getPortfolioItems().size() : 0);
             // Count matches for this user (either as user1 or user2 in Match entity)
             stats.setTotalMatches((int) userDAO.countMatchesForUser(userId));
-            // TODO: Implement likes received count when SwipeAction entity is enhanced
+            // TODO: Implement matches/likes feature on users on an ___ action
             stats.setTotalLikesReceived(0);
         }
 
