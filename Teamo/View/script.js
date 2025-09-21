@@ -5,29 +5,34 @@ const profiles = [
     name: 'Alice Johnson',
     title: 'Frontend Developer',
     bio: 'Loves building sleek user interfaces.',
-    avatar: 'https://i.pravatar.cc/150?img=1'
+    avatar: 'https://i.pravatar.cc/150?img=1',
+    tags: ['tag1','tag2','tag3','tag4','tag5'],
   },
   {
     name: 'Bob Smith',
     title: 'Backend Engineer',
     bio: 'Passionate about server-side logic.',
-    avatar: 'https://i.pravatar.cc/150?img=2'
+    avatar: 'https://i.pravatar.cc/150?img=2',
+    tags: ['tag1','tag2','tag3','tag4','tag5'],
   },
   {
     name: 'Charlie Rose',
     title: 'UX Designer',
     bio: 'Crafts experiences with empathy.',
-    avatar: 'https://i.pravatar.cc/150?img=3'
+    avatar: 'https://i.pravatar.cc/150?img=3',
+    tags: ['tag1','tag2','tag3','tag4','tag5'],
   },
   { name: 'Dana Waterboard',   
     title: 'UI Designer',
     bio: 'Crafts visuals yada yada.',
-    avatar: 'https://i.pravatar.cc/150?img=4'
+    avatar: 'https://i.pravatar.cc/150?img=4',
+    tags: ['tag1','tag2','tag3','tag4','tag5'],
   },
   { name: 'Eli Steverstein', 
     title: 'Game Dev',
     bio: 'Crafts experiences with hamsters.',
-    avatar: 'https://i.pravatar.cc/150?img=5'
+    avatar: 'https://i.pravatar.cc/150?img=5',
+    tags: ['tag1','tag2','tag3','tag4','tag5'],
   },
 ];
 
@@ -49,6 +54,10 @@ function renderCardsWindow() {
       const card = document.createElement('div');
       card.className = 'profile-card';
       
+      let tagHTML = '';
+      for (let i = 0; i < 3 && i < profile.tags.length; i++) {
+        tagHTML += `<div class="sidebar__profile_tags">${profile.tags[i]}</div>`;
+      }
       card.innerHTML = `
 
         <div class="avatar_container">
@@ -61,9 +70,7 @@ function renderCardsWindow() {
               </div>
           </div>
           <div class="sidebar__tag_container">
-              <div class="sidebar__profile_tags">Top Tag 1</div>
-              <div class="sidebar__profile_tags">Top Tag 2</div>
-              <div class="sidebar__profile_tags">Top Tag 3</div>
+             ${tagHTML}
           </div>
           <div class="sidebar__status"> 
               <div>
@@ -124,15 +131,15 @@ function updateCards() {
 
 renderCardsWindow();
 
-// // Scroll interaction
-// let scrollTimeout;
-// cardViewer.addEventListener('wheel', (e) => {
-//   clearTimeout(scrollTimeout);
-//   scrollTimeout = setTimeout(() => {
-//     if (e.deltaY > 0) moveToNextCard();
-//     else moveToPrevCard();
-//   }, 100);
-// });
+// Scroll interaction
+let scrollTimeout;
+cardViewer.addEventListener('wheel', (e) => {
+  clearTimeout(scrollTimeout);
+  scrollTimeout = setTimeout(() => {
+    if (e.deltaY > 0) moveToNextCard();
+    else moveToPrevCard();
+  }, 100);
+});
 
 // Click interaction
 cardViewer.addEventListener('click', (e) => {
