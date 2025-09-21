@@ -1,7 +1,6 @@
 package com.example.Teamo.Model;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "portfolio_items")
