@@ -3,15 +3,6 @@ package com.example.Teamo.Model;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
-<<<<<<< HEAD
-/**
- * PortfolioItem entity representing a specific piece of work or project that a user showcases
- * in their portfolio. This could be a design, code snippet, artwork, or any creative output.
- *
- * @author Teamo Development Team
- */
-=======
->>>>>>> 408160eb0091f7af97f6b7e05d7cd54e70da892c
 @Entity
 @Table(name = "portfolio_items")
 public class PortfolioItem {
