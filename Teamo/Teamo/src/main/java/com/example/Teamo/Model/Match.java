@@ -29,12 +29,24 @@ public class Match {
     @JoinColumn(name = "user2_id", nullable = false)
     private User user2;
 
+<<<<<<< HEAD
     @Column(nullable = false)
     private LocalDateTime matchedAt;
 
     @Column
     private LocalDateTime lastInteraction;
 
+=======
+    // The time the match was created
+    @Column(nullable = false)
+    private LocalDateTime matchedAt;
+
+    // The time the match was last interacted with
+    @Column
+    private LocalDateTime lastInteraction;
+
+    // Whether the match is active or not
+>>>>>>> 408160eb0091f7af97f6b7e05d7cd54e70da892c
     @Column(nullable = false)
     private boolean isActive = true;
 
