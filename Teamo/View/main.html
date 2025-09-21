@@ -1,20 +1,89 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Spring Boot HTML</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profile Page</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="cards.css" />
 </head>
 <body>
-    <h1 th:text="${message}"></h1>
-    <div class="row">
-        <div class="column"> 
-            <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-            </p>
-        </div>
-        <div class="column"> 
-            <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-            </p>
+ <header class="header">
+    <div class="header__logo">teamo</div>
+    <div class="header__icons">
+      <button class="header__icon">✉️</button>
+      <button class="header__icon">⚙️</button>
+      <button class="header__icon profile-icon"></button>
+    </div>
+  </header>
+
+  <main class="main">
+    <div class="sidebar">
+
+      <div class="sidebar__edit-tags">
+        <div> 
+            <button>Edit Tags</button>
+            <div class="Tag__search">
+                <input type="text" placeholder="Search..." />
             </div>
+        </div>
+      </div>
+
+      <!-- <div class="sidebar__profile-preview"> -->
+        <!-- <div class="profile_card">
+            <div class="avatar_container">
+                <div class="sidebar__banner">Banner IMG</div>
+                <div>
+                    <div>
+                        <img src="https://placehold.co/100x100" class="sidebar__avatar">
+                        </img>
+                    </div>
+                </div>
+            </div>
+            <div class="sidebar__tag_container">
+                <div class="sidebar__profile_tags">Top Tag 1</div>
+                <div class="sidebar__profile_tags">Top Tag 2</div>
+                <div class="sidebar__profile_tags">Top Tag 3</div>
+            </div>
+            <div class="sidebar__status">
+                <div> INPUT INPUT INPUT INPUT INPUT INPUT INPUT INPUT INPUT INPUT INPUT INPUT INPUT INPUT INPUT INPUT INPUT INPUT INPUT INPUT INPUT INPUT INPUT INPUT INPUT INPUT INPUT INPUT INPUT INPUT INPUT INPUT INPUT INPUT INPUT 
+
+                </div>
+            </div>
+        </div> -->
+        <div class="container">
+          <div class="card-viewer" id="cardViewer">
+            <!-- Profile cards will be inserted here -->
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar__bottom" onclick="alert('Clicked!')">
+        Click
+      </div>
     </div>
 
+    <section class="profile">
+      <div class="profile__banner">Banner</div>
+      <div class="profile__info">
+        <div class="profile__avatar"></div>
+        <div>
+          <h1 class="profile__name">NAME</h1>
+          <p>Projects: 3 | Followers: 10 <button>Message</button></p>
+          <p class="profile__tagline">Hi! Aspiring Designer</p>
+        </div>
+      </div>
+
+      <div class="gallery">
+        <div class="gallery__item">IMG</div>
+        <div class="gallery__item">IMG</div>
+        <div class="gallery__item">IMG</div>
+        <div class="gallery__item">IMG</div>
+        <div class="gallery__item">IMG</div>
+        <div class="gallery__item">IMG</div>
+      </div>
+    </section>
+  </main>
+  <script src="script.js"></script>
 </body>
 </html>
