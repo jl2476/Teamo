@@ -177,22 +177,116 @@ body {
   margin-bottom: 5px;
 }
 
+/* gallery styling */
+
 .gallery {
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
+  /* justify-content: flex-start; */
 }
 
 .gallery__item {
   height: 200px;
   width: 200px;
   background: #aaa;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  /* display: grid; */
+  /* align-items: center;
+  justify-content: center; */
   color: white;
   font-weight: bold;
   margin: 1px;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.gallery__image {
+  object-fit: cover;
+  height:100%;
+  width: 100%;
+  display: block;
+}
+
+.gallery__details {
+  display: none;
+  padding: 10px;
+  background: #fff;
+  color: #333;
+}
+
+.gallery__item.expanded {
+  flex: 0 0 75%;
+  outline: 2px solid limegreen;
+  margin: 20px;
+  z-index: 1000;
+}
+
+.gallery__details {
+  display: block;
+  outline: 2px solid magenta; 
+  position: sticky;
+  top: 0px;
+}
+
+/* gallery modal */
+.gallery__item img {
+  width: 200px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+/* Modal styles */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 105; /* Sit on top */
+  padding-top: 50px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0, 0, 0, 0.7); /* Black background with transparency */
+  align-items: center;
+  justify-content: center;
+}
+
+/* Modal Content (image) */
+.modal-content {
+  margin: auto;
+  /* margin: 5% 20% 0; */
+  display: block;
+  max-width: 80%;
+  max-height: 80%;
+}
+
+.parent {
+  display: flex;
+  flex-direction: column;
+}
+
+/* caption */
+#caption {
+  color: black;
+  background-color: white;
+}
+
+/* The Close Button */
+.close-btn {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #fff;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+  color: #bbb;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 /* for tag selection section*/
@@ -201,14 +295,12 @@ body {
   position: sticky;
   top: 0px;
   left: 0;
-  width: 300px;
-  background-color: #f0f0f0;
+  width: 100%;
+  /* background-color: #f0f0f0; */
   padding: 10px;
-  box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
   z-index: 10;
   transition: height 0.3s ease;
-  overflow: hidden;
-  border-right: 1px solid #ccc;
+  overflow: visible;
 }
 
 #tag-section.collapsed {
@@ -264,4 +356,30 @@ body {
 .main-content {
   margin-top: 10px;
   padding: 20px;
+}
+
+/* for tag search bar selection list */
+
+.suggestions-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #ccc;
+  max-height: 150px;
+  overflow-y: auto;
+  background: white;
+  width: 100%;
+  z-index: 100;
+  position: sticky;
+  bottom: 0px;
+}
+
+.suggestions-list li {
+  padding: 8px;
+  cursor: pointer;
+  z-index: 101;
+}
+
+.suggestions-list li:hover {
+  background-color: #f0f0f0;
 }
