@@ -59,10 +59,10 @@ public class UserService {
         return userDAO.findByTagCategoriesIn(Set.of(category.toLowerCase()));
     }
 
-    public List<User> findRecentlyActiveUsers(int limit) {
-        List<User> users = userDAO.findRecentlyActiveUsers(limit);
-        return users.stream().limit(limit).collect(Collectors.toList());
-    }
+    // public List<User> findRecentlyActiveUsers(int limit) {
+    //     List<User> users = userDAO.findRecentlyActiveUsers(limit);
+    //     return users.stream().limit(limit).collect(Collectors.toList());
+    // }
 
     public void deactivateUser(Long userId) {
         userDAO.findById(userId).ifPresent(user -> {

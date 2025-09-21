@@ -70,11 +70,11 @@ public class UserController {
         return ResponseEntity.ok(users);
     }
 
-    @GetMapping("/recent")
-    public ResponseEntity<List<User>> getRecentlyActiveUsers(@RequestParam(defaultValue = "20") int limit) {
-        List<User> users = userService.findRecentlyActiveUsers(limit);
-        return ResponseEntity.ok(users);
-    }                                                                                                                           
+    // @GetMapping("/recent")
+    // public ResponseEntity<List<User>> getRecentlyActiveUsers(@RequestParam(defaultValue = "20") int limit) {
+    //     List<User> users = userService.findRecentlyActiveUsers(limit);
+    //     return ResponseEntity.ok(users);
+    // }                                                                                                                           
 
     @DeleteMapping("/{userId}")
     public ResponseEntity<Void> deactivateUser(@PathVariable Long userId) {

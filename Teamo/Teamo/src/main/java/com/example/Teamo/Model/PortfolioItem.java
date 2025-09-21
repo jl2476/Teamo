@@ -32,14 +32,8 @@ public class PortfolioItem {
     @Column
     private Integer orderIndex = 0; // For ordering portfolio items
 
-    @Column(nullable = false)
-    private LocalDateTime createdAt;
-
-    @Column
-    private LocalDateTime updatedAt;
-
-    @Column(nullable = false)
-    private boolean isPublic = true;
+    // @Column(nullable = false)
+    // private boolean isPublic = true;
 
     // Relationships
     @ManyToOne(fetch = FetchType.LAZY)
@@ -53,8 +47,6 @@ public class PortfolioItem {
         this.title = title;
         this.description = description;
         this.user = user;
-        this.createdAt = LocalDateTime.now();
-        this.updatedAt = LocalDateTime.now();
     }
 
     // Getters and Setters
@@ -122,29 +114,13 @@ public class PortfolioItem {
         this.orderIndex = orderIndex;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
+    // public boolean isPublic() {
+    //     return isPublic;
+    // }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public boolean isPublic() {
-        return isPublic;
-    }
-
-    public void setPublic(boolean isPublic) {
-        this.isPublic = isPublic;
-    }
+    // public void setPublic(boolean isPublic) {
+    //     this.isPublic = isPublic;
+    // }
 
     public User getUser() {
         return user;
@@ -152,14 +128,6 @@ public class PortfolioItem {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    /**
-     * Update the updatedAt timestamp
-     */
-    @PreUpdate
-    public void preUpdate() {
-        this.updatedAt = LocalDateTime.now();
     }
 
     /**

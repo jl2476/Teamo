@@ -43,13 +43,7 @@ public class User {
     @Column
     private String bannerUrl;
 
-    @Column(nullable = false)
-    private LocalDateTime createdAt;
-
     @Column
-    private LocalDateTime updatedAt;
-
-    @Column(nullable = false)
     private boolean isActive = true;
 
     // Relationships
@@ -73,8 +67,6 @@ public class User {
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.createdAt = LocalDateTime.now();
-        this.updatedAt = LocalDateTime.now();
     }
 
     // Getters and Setters
@@ -150,22 +142,6 @@ public class User {
         this.bannerUrl = bannerUrl;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
     public boolean isActive() {
         return isActive;
     }
@@ -194,8 +170,4 @@ public class User {
         return firstName + " " + lastName;
     }
 
-    @PreUpdate
-    public void preUpdate() {
-        this.updatedAt = LocalDateTime.now();
-    }
 }
