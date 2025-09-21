@@ -31,11 +31,17 @@ public class User {
     @Column(nullable = false)
     private String lastName;
 
+    @Column(length = 100)
+    private String title;
+
     @Column(length = 500)
     private String bio;
 
     @Column
     private String profilePictureUrl;
+
+    @Column
+    private String bannerUrl;
 
     @Column(nullable = false)
     private LocalDateTime createdAt;
@@ -112,6 +118,14 @@ public class User {
         this.lastName = lastName;
     }
 
+    public String getTitle(){
+        return title;
+    }
+
+    public void setTItle(String title){
+        this.title = title;
+    }
+
     public String getBio() {
         return bio;
     }
@@ -126,6 +140,14 @@ public class User {
 
     public void setProfilePictureUrl(String profilePictureUrl) {
         this.profilePictureUrl = profilePictureUrl;
+    }
+
+    public String getBannerUrl() {
+        return bannerUrl;
+    }
+
+    public void setBannerUrl(String bannerUrl) {
+        this.bannerUrl = bannerUrl;
     }
 
     public LocalDateTime getCreatedAt() {
