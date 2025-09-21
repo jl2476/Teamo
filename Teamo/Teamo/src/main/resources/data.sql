@@ -86,7 +86,25 @@ MERGE INTO tags (name, category) KEY(name) VALUES
 
 
 --Test/Placeholder Users
-MERGE INTO users (email, password, firstName, lastName) KEY(email) VALUES
-('admin@gmail.com', 'admin123', 'Admin', 'Account'),
-('tester@yahoo.com', 'tester123', 'Tester', 'Account'),
-('sj123@gmail.com','steve123', 'Steve', 'Jobs');
+MERGE INTO users (email, password, firstName, lastName, title, bio, profilePictureUrl, bannerUrl) KEY(email) VALUES
+('admin@gmail.com', 'admin123', 'Alice', 'Johnson', 'Frontend Developer', 'Loves building sleek user interfaces.', 'https://i.pravatar.cc/150?img=1', 'https://placehold.co/1000x400'),
+('tester@yahoo.com', 'tester123', 'Bob', 'Smith', 'Backend Engineer', 'Passionate about server-side logic.', 'https://i.pravatar.cc/150?img=2','https://placehold.co/1000x400'),
+('cr123@gmail.com','rose123', 'Charlie', 'Rose', 'UX Designer', 'Crafts experiences with empath.', 'https://i.pravatar.cc/150?img=3', 'https://placehold.co/1000x400'),
+('dwUI@gmail.com', 'dw123', 'Dana', 'Waterboard', 'UI Designer', 'Crafts visuals yada yada.','https://i.pravatar.cc/150?img=4','https://placehold.co/1000x400' ),
+('es123@gmail.com', 'es123', 'Eli', 'Steverstein', 'Game Dev', 'Crafts experiences with hamsters.', 'https://i.pravatar.cc/150?img=5','https://placehold.co/1000x400');
+
+MERGE INTO portfolio_items (user, title, description, imageUrl) VALUES
+(SELECT id FROM users WHERE email = 'admin@gmail.com', 'Website 1', 'https://placehold.co/600x400'),
+(SELECT id FROM users WHERE email = 'admin@gmail.com', 'Website 2', 'https://placehold.co/600x400'),
+(SELECT id FROM users WHERE email = 'admin@gmail.com', 'Website 3', 'https://placehold.co/600x400'),
+(SELECT id FROM users WHERE email = 'tester@yahoo.com', 'Project 1', 'https://placehold.co/600x400'),
+(SELECT id FROM users WHERE email = 'tester@yahoo.com', 'Website 1', 'https://placehold.co/600x400'),
+(SELECT id FROM users WHERE email = 'tester@yahoo.com', 'Game 1', 'https://placehold.co/600x400'),
+(SELECT id FROM users WHERE email = 'tester@yahoo.com', 'Project 2', 'https://placehold.co/600x400'),
+(SELECT id FROM users WHERE email = 'tester@yahoo.com', 'Project 3', 'https://placehold.co/600x400'),
+(SELECT id FROM users WHERE email = 'cr123@gmail.com', 'Website 1', 'https://placehold.co/600x400'),
+(SELECT id FROM users WHERE email = 'cr123@gmail.com', 'Website 2', 'https://placehold.co/600x400'),
+(SELECT id FROM users WHERE email = 'dwUI@gmail.com', 'Website 1', 'https://placehold.co/600x400'),
+(SELECT id FROM users WHERE email = 'es123@gmail.com', 'Project 1', 'https://placehold.co/600x400'),
+(SELECT id FROM users WHERE email = 'es123@gmail.com', 'Project 2', 'https://placehold.co/600x400'),
+(SELECT id FROM users WHERE email = 'es123@gmail.com', 'Project 3', 'https://placehold.co/600x400');
