@@ -17,7 +17,11 @@ const profiles = [
     avatar: 'https://i.pravatar.cc/150?img=1',
     banner: 'https://placehold.co/1000x400',
     tags: ['tag1','tag2','tag3','tag4','tag5'],
-    portfolio_imgs: ['https://placehold.co/600x400','https://placehold.co/600x400','https://placehold.co/600x400','https://placehold.co/600x400','https://placehold.co/600x400'],
+    portfolio_imgs: [{img_src: 'https://placehold.co/600x400', title: 'img 1', desc: 'desc 1'}, 
+      {img_src: 'https://placehold.co/600x400', title: 'img 2', desc: 'desc 2'}, 
+      {img_src: 'https://placehold.co/200x600', title: 'img 3', desc: 'desc 3'}, {img_src: 'https://placehold.co/600x400', title: 'img 4', desc: 'desc 4'},
+      {img_src: 'https://placehold.co/600x400', title: 'img 5', desc: 'desc 5'},
+    ],
     projects: [] ,
     followers: [],
   },
@@ -39,7 +43,11 @@ const profiles = [
     avatar: 'https://i.pravatar.cc/150?img=3',
     banner: 'https://placehold.co/1000x400',
     tags: ['tag1','tag2','tag3','tag4','tag5'],
-    portfolio_imgs: ['https://placehold.co/600x400','https://placehold.co/600x400','https://placehold.co/600x400','https://placehold.co/600x400','https://placehold.co/600x400'],
+    portfolio_imgs: [{img_src: 'https://placehold.co/600x400', title: 'img 1', desc: 'desc 1'}, 
+      {img_src: 'https://placehold.co/600x400', title: 'img 2', desc: 'desc 2'}, 
+      {img_src: 'https://placehold.co/600x400', title: 'img 3', desc: 'desc 3'}, {img_src: 'https://placehold.co/600x400', title: 'img 4', desc: 'desc 4'},
+      {img_src: 'https://placehold.co/600x400', title: 'img 5', desc: 'desc 5'},
+    ],
     projects: [] ,
     followers: [],
   },
@@ -50,7 +58,11 @@ const profiles = [
     avatar: 'https://i.pravatar.cc/150?img=4',
     banner: 'https://placehold.co/1000x400',
     tags: ['tag1','tag2','tag3','tag4','tag5'],
-    portfolio_imgs: ['https://placehold.co/600x400','https://placehold.co/600x400','https://placehold.co/600x400','https://placehold.co/600x400','https://placehold.co/600x400'],
+    portfolio_imgs: [{img_src: 'https://placehold.co/600x400', title: 'img 1', desc: 'desc 1'}, 
+      {img_src: 'https://placehold.co/600x400', title: 'img 2', desc: 'desc 2'}, 
+      {img_src: 'https://placehold.co/600x400', title: 'img 3', desc: 'desc 3'}, {img_src: 'https://placehold.co/600x400', title: 'img 4', desc: 'desc 4'},
+      {img_src: 'https://placehold.co/600x400', title: 'img 5', desc: 'desc 5'},
+    ],
     projects: [] ,
     followers: [],
   },
@@ -295,10 +307,6 @@ const detailContainer = document.getElementById('profile-detail');
     galleryHTML += `
     <div class="gallery__item" id="gallery__item">
       <img src="${item.img_src}" alt="${item.title}" class="gallery__image">
-      <div class="gallery__details">
-        <h3>${item.title}</h3>
-        <p>${item.desc}</p>
-      </div>
     </div>
     `;
   }
@@ -309,35 +317,79 @@ const detailContainer = document.getElementById('profile-detail');
       <img class="profile__banner" src=${profile.banner}>
       </img>
     </div>
-      <div class="profile__info">
-        <div>
-          <img src="${profile.avatar}" alt="${profile.name}" class="detail-avatar">
-        </div>
-        <div>
-          <h1 class="profile__name">${profile.name} | ${profile.title}</h1>
-          <p class="profile__stats">Projects: ${profile.projects.length} | Followers: ${profile.followers.length} <button>Message</button></p>
-        </div>
+    <div class="profile__info">
+      <div>
+        <img src="${profile.avatar}" alt="${profile.name}" class="detail-avatar">
       </div>
+      <div>
+        <h1 class="profile__name">${profile.name} | ${profile.title}</h1>
+        <p class="profile__stats">Projects: ${profile.projects.length} | Followers: ${profile.followers.length} <button>Message</button></p>
       </div>
-      <p class="profile__tagline">${profile.bio}</p>
-      <div class="gallery">
-          ${galleryHTML}
-      </div> 
+    </div>
+    </div>
+    <p class="profile__tagline">${profile.bio}</p>
+    <div class="gallery">
+        ${galleryHTML}
+    </div> 
+    <div id="imageModal" class="modal">
+      <span class="close-btn">&times;</span>
+      <div class="parent">
+        <img class="modal-content" id="fullImage" />
+        <!-- <div id="caption">aaaa</div> -->
+      </div>
+    </div>
   `;
       // Add expand-on-click gallery img functionality
-    const galleryItems = document.querySelectorAll('.gallery__item');
+    // const galleryItems = document.querySelectorAll('.gallery__item');
 
-    galleryItems.forEach(item => {
-      item.addEventListener('click', () => {
-        item.classList.toggle('expanded');
+    // galleryItems.forEach(item => {
+    //   item.addEventListener('click', () => {
+    //     item.classList.toggle('expanded');
+    //   });
+    // });
+    // Get the modal and its elements
+    const modal = document.getElementById("imageModal");
+    const fullImage = document.getElementById("fullImage");
+    // const caption = document.getElementById("caption");
+    const closeBtn = document.querySelector(".close-btn");
+    const galleryImages = document.querySelectorAll(".gallery img");
+
+    // Click event listener to each gallery image
+    galleryImages.forEach(image => {
+      image.addEventListener("click", () => {
+        // Get full image path from the data-full attribute
+        const fullImagePath = image.getAttribute('src');
+
+        // Update the modal's image source
+        fullImage.src = fullImagePath;
+        const imgSrcToFind = fullImagePath;
+        // const capt_item = profile.portfolio_imgs.find(img => img.img_src === imgSrcToFind);
+        // let captionHTML = '';
+        // captionHTML += `
+        //   <p> 
+        //   ${capt_item.title} ${capt_item.desc}
+        //   </p>
+        // `;
+        // Show modal
+        modal.style.display = "block";
       });
     });
+    // Close modal when close button clicked
+    closeBtn.addEventListener("click", () => {
+      modal.style.display = "none";
+    });
+
+    // Close modal if clicks anywhere outside image
+    window.addEventListener("click", (event) => {
+      if (event.target === modal) {
+        modal.style.display = "none";
+      }
+    });
+
     }
 
 renderCardsWindow();
 renderProfileWindow();
-
-
 
 // Scroll interaction
 let scrollTimeout;

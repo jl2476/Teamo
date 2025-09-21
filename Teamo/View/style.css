@@ -189,20 +189,20 @@ body {
   height: 200px;
   width: 200px;
   background: #aaa;
-  display: grid;
+  /* display: grid; */
   /* align-items: center;
   justify-content: center; */
   color: white;
   font-weight: bold;
   margin: 1px;
-
   position: relative;
   cursor: pointer;
-  
   transition: all 0.3s ease;
 }
 
 .gallery__image {
+  object-fit: cover;
+  height:100%;
   width: 100%;
   display: block;
 }
@@ -226,6 +226,67 @@ body {
   outline: 2px solid magenta; 
   position: sticky;
   top: 0px;
+}
+
+/* gallery modal */
+.gallery__item img {
+  width: 200px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+/* Modal styles */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 105; /* Sit on top */
+  padding-top: 50px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0, 0, 0, 0.7); /* Black background with transparency */
+  align-items: center;
+  justify-content: center;
+}
+
+/* Modal Content (image) */
+.modal-content {
+  margin: auto;
+  /* margin: 5% 20% 0; */
+  display: block;
+  max-width: 80%;
+  max-height: 80%;
+}
+
+.parent {
+  display: flex;
+  flex-direction: column;
+}
+
+/* caption */
+#caption {
+  color: black;
+  background-color: white;
+}
+
+/* The Close Button */
+.close-btn {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #fff;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+  color: #bbb;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 /* for tag selection section*/
