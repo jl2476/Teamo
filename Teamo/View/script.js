@@ -61,7 +61,11 @@ const profiles = [
     avatar: 'https://i.pravatar.cc/150?img=5',
     banner: 'https://placehold.co/1000x400',
     tags: ['tag1','tag2','tag3','tag4','tag5'],
-    portfolio_imgs: ['https://placehold.co/600x400','https://placehold.co/600x400','https://placehold.co/600x400','https://placehold.co/600x400','https://placehold.co/600x400'],
+    portfolio_imgs: [{img_src: 'https://placehold.co/600x400', title: 'img 1', desc: 'desc 1'}, 
+      {img_src: 'https://placehold.co/600x400', title: 'img 2', desc: 'desc 2'}, 
+      {img_src: 'https://placehold.co/600x400', title: 'img 3', desc: 'desc 3'}, {img_src: 'https://placehold.co/600x400', title: 'img 4', desc: 'desc 4'},
+      {img_src: 'https://placehold.co/600x400', title: 'img 5', desc: 'desc 5'},
+    ],
     projects: [] ,
     followers: [],
   },
@@ -73,26 +77,88 @@ const toggleBtn = document.getElementById('toggle-btn');
 const tagSection = document.getElementById('tag-section');
 const tagSearch = document.getElementById('tag-search');
 const selectedTagsContainer = document.getElementById('selected-tags');
+const suggestionsList = document.getElementById('suggestions');
 
 // Predefined sample tags for search simulation
-const availableTags = ['JavaScript', 'HTML', 'CSS', 'React', 'Vue', 'Node.js'];
-
+const availableTags = ['Frontend Developer', 'Backend Developer', 'Developer','JavaScript', 'HTML', 'CSS', 'React', 'Vue', 'Node.js'];
 let selectedTags = [];
 
+// Click button to expand area
 toggleBtn.addEventListener('click', () => {
   tagSection.classList.toggle('expanded');
   tagSection.classList.toggle('collapsed');
 });
 
-// Listen for Enter key in search input
-tagSearch.addEventListener('keypress', (e) => {
+// Update the selected tags display
+function updateSelectedTags() {
+  selectedTagsContainer.innerHTML = selectedTags.map(tag => `<span>${tag}</span>`).join(', ');
+}
+
+// Filter and show suggestions
+function showSuggestions(query) {
+  suggestionsList.innerHTML = '';
+  if (!query) return;
+
+  const filtered = availableTags.filter(tag =>
+    tag.toLowerCase().includes(query.toLowerCase()) &&
+    !selectedTags.includes(tag)
+  );
+
+  filtered.forEach(tag => {
+    const li = document.createElement('li');
+    li.textContent = tag;
+    li.addEventListener('click', () => {
+      addTag(tag);
+    });
+    suggestionsList.appendChild(li);
+  });
+}
+
+// Add a tag to selected list
+function addTag(tag) {
+  if (!selectedTags.includes(tag)) {
+    selectedTags.push(tag);
+    updateSelectedTags();
+    tagSearch.value = '';
+    suggestionsList.innerHTML = '';
+  }
+}
+
+// Handle input (suggestions)
+tagSearch.addEventListener('input', () => {
+  const query = tagSearch.value.trim();
+  showSuggestions(query);
+});
+
+
+// Handle Enter key
+tagSearch.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') {
+    e.preventDefault();
     const query = tagSearch.value.trim();
-    if (query && availableTags.includes(query) && !selectedTags.includes(query)) {
-      selectedTags.push(query);
-      updateSelectedTags();
-      tagSearch.value = '';
+    const match = availableTags.find(tag => tag.toLowerCase() === query.toLowerCase());
+    if (match && !selectedTags.includes(match)) {
+      addTag(match);
     }
+  }
+});
+
+// // Listen for Enter key in search input
+// tagSearch.addEventListener('keypress', (e) => {
+//   if (e.key === 'Enter') {
+//     const query = tagSearch.value.trim();
+//     if (query && availableTags.includes(query) && !selectedTags.includes(query)) {
+//       selectedTags.push(query);
+//       updateSelectedTags();
+//       tagSearch.value = '';
+//     }
+//   }
+// });
+
+// Hide suggestions when clicking outside
+document.addEventListener('click', (e) => {
+  if (!suggestionsList.contains(e.target) && e.target !== tagSearch) {
+    suggestionsList.innerHTML = '';
   }
 });
 
@@ -224,7 +290,17 @@ const detailContainer = document.getElementById('profile-detail');
 
   let galleryHTML = '';
   for (let i = 0; i < profile.portfolio_imgs.length; i++) {
-    galleryHTML += `<div class="gallery__item">${profile.portfolio_imgs[i]}</div>`;
+    // galleryHTML += `<div class="gallery__item">${profile.portfolio_imgs[i]}</div>`;
+    const item = profile.portfolio_imgs[i];
+    galleryHTML += `
+    <div class="gallery__item" id="gallery__item">
+      <img src="${item.img_src}" alt="${item.title}" class="gallery__image">
+      <div class="gallery__details">
+        <h3>${item.title}</h3>
+        <p>${item.desc}</p>
+      </div>
+    </div>
+    `;
   }
 
   detailContainer.innerHTML = `
@@ -248,10 +324,20 @@ const detailContainer = document.getElementById('profile-detail');
           ${galleryHTML}
       </div> 
   `;
-}
+      // Add expand-on-click gallery img functionality
+    const galleryItems = document.querySelectorAll('.gallery__item');
+
+    galleryItems.forEach(item => {
+      item.addEventListener('click', () => {
+        item.classList.toggle('expanded');
+      });
+    });
+    }
 
 renderCardsWindow();
 renderProfileWindow();
+
+
 
 // Scroll interaction
 let scrollTimeout;
