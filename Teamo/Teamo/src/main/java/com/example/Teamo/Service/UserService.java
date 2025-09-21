@@ -11,12 +11,6 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-/**
- * Service class for User-related business logic.
- * Handles user operations, search, and matching functionality.
- *
- * @author Teamo Development Team
- */
 @Service
 @Transactional
 public class UserService {
@@ -28,22 +22,10 @@ public class UserService {
         this.userDAO = userDAO;
     }
 
-    /**
-     * Find a user by their ID
-     * @param userId the user ID
-     * @return Optional containing the user if found
-     */
     public Optional<User> findById(Long userId) {
         return userDAO.findById(userId);
     }
 
-    /**
-     * Update an existing user
-     * @param userId the user ID to update
-     * @param updatedUser the updated user data
-     * @return the updated user
-     * @throws RuntimeException if user not found
-     */
     public User updateUser(Long userId, User updatedUser) {
         return userDAO.findById(userId)
                 .map(user -> {
@@ -60,75 +42,28 @@ public class UserService {
                     if (updatedUser.getProfilePictureUrl() != null) {
                         user.setProfilePictureUrl(updatedUser.getProfilePictureUrl());
                     }
-                    if (updatedUser.getLocation() != null) {
-                        user.setLocation(updatedUser.getLocation());
-                    }
-                    if (updatedUser.getWebsite() != null) {
-                        user.setWebsite(updatedUser.getWebsite());
-                    }
-                    if (updatedUser.getLinkedin() != null) {
-                        user.setLinkedin(updatedUser.getLinkedin());
-                    }
-                    if (updatedUser.getGithub() != null) {
-                        user.setGithub(updatedUser.getGithub());
-                    }
                     return userDAO.save(user);
                 })
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
     }
 
-    /**
-     * Search users by name, bio, or location
-     * @param query the search query
-     * @return list of matching users
-     */
     public List<User> searchUsers(String query) {
         return userDAO.searchUsers(query);
     }
 
-    /**
-     * Find users with complementary skills to the specified user
-     * @param userId the user ID to find complements for
-     * @return list of users with complementary skills
-     */
-    public List<User> findUsersWithComplementarySkills(Long userId) {
-        return userDAO.findUsersWithComplementarySkills(userId);
+    public List<User> findUsersWithComplementaryTags(Long userId) {
+        return userDAO.findUsersWithComplementaryTags(userId);
     }
 
-    /**
-     * Find users by skill category
-     * @param category the skill category
-     * @return list of users with that skill category
-     */
-    public List<User> findUsersBySkillCategory(String category) {
-        return userDAO.findBySkillCategoriesIn(Set.of(category.toLowerCase()));
+    public List<User> findUsersByTagCategory(String category) {
+        return userDAO.findByTagCategoriesIn(Set.of(category.toLowerCase()));
     }
 
-    /**
-     * Find users by location
-     * @param location the location
-     * @return list of users in that location
-     */
-    public List<User> findUsersByLocation(String location) {
-        return userDAO.findByLocationIgnoreCase(location);
-    }
-
-    /**
-     * Find recently active users
-     * @param limit maximum number of users to return
-     * @return list of recently active users
-     */
     public List<User> findRecentlyActiveUsers(int limit) {
         List<User> users = userDAO.findRecentlyActiveUsers(limit);
         return users.stream().limit(limit).collect(Collectors.toList());
     }
 
-
-
-    /**
-     * Deactivate a user account
-     * @param userId the user ID to deactivate
-     */
     public void deactivateUser(Long userId) {
         userDAO.findById(userId).ifPresent(user -> {
             user.setActive(false);
@@ -136,29 +71,15 @@ public class UserService {
         });
     }
 
-    /**
-     * Find users by multiple skill names
-     * @param skillNames array of skill names
-     * @return list of users with those skills
-     */
-    public List<User> findUsersBySkills(String[] skillNames) {
-        Set<String> skills = Set.of(skillNames);
-        return userDAO.findBySkillCategoriesIn(skills);
+    public List<User> findUsersByTags(String[] tagNames) {
+        Set<String> tags = Set.of(tagNames);
+        return userDAO.findByTagCategoriesIn(tags);
     }
 
-    /**
-     * Find all active users
-     * @return list of all active users
-     */
     public List<User> findAllActiveUsers() {
         return userDAO.findByIsActiveTrue();
     }
 
-    /**
-     * Get user statistics
-     * @param userId the user ID
-     * @return UserStats object with user statistics
-     */
     public UserStats getUserStats(Long userId) {
         UserStats stats = new UserStats();
         Optional<User> userOpt = userDAO.findById(userId);
@@ -167,7 +88,7 @@ public class UserService {
             User user = userOpt.get();
             stats.setTotalPortfolioItems(user.getPortfolioItems() != null ? user.getPortfolioItems().size() : 0);
             // Count matches for this user (either as user1 or user2 in Match entity)
-            stats.setTotalMatches((int) userDAO.countMatchesForUser(userId));
+            //stats.setTotalMatches((int) userDAO.countMatchesForUser(userId));
             // TODO: Implement matches/likes feature on users on an ___ action
             stats.setTotalLikesReceived(0);
         }
@@ -192,4 +113,5 @@ public class UserService {
         public int getTotalLikesReceived() { return totalLikesReceived; }
         public void setTotalLikesReceived(int totalLikesReceived) { this.totalLikesReceived = totalLikesReceived; }
     }
+
 }

@@ -10,7 +10,6 @@ import java.util.Set;
  * Users create portfolio-style profiles to showcase their work and connect with
  * collaborators.
  *
- * @author Teamo Development Team
  */
 @Entity
 @Table(name = "users")
@@ -38,18 +37,6 @@ public class User {
     @Column
     private String profilePictureUrl;
 
-    @Column
-    private String location;
-
-    @Column
-    private String website;
-
-    @Column
-    private String linkedin;
-
-    @Column
-    private String github;
-
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
@@ -64,8 +51,8 @@ public class User {
     private List<PortfolioItem> portfolioItems;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "user_skills", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "skill_id"))
-    private Set<Skill> skills;
+    @JoinTable(name = "user_tags", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "tag_id"))
+    private Set<Tag> tags;
 
     // Note: Removed the matches relationship mapping since Match entity uses user1/user2 pattern
     // The relationship is still accessible through Match.user1 and Match.user2
@@ -141,38 +128,6 @@ public class User {
         this.profilePictureUrl = profilePictureUrl;
     }
 
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public String getWebsite() {
-        return website;
-    }
-
-    public void setWebsite(String website) {
-        this.website = website;
-    }
-
-    public String getLinkedin() {
-        return linkedin;
-    }
-
-    public void setLinkedin(String linkedin) {
-        this.linkedin = linkedin;
-    }
-
-    public String getGithub() {
-        return github;
-    }
-
-    public void setGithub(String github) {
-        this.github = github;
-    }
-
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
@@ -205,30 +160,18 @@ public class User {
         this.portfolioItems = portfolioItems;
     }
 
-    public Set<Skill> getSkills() {
-        return skills;
+    public Set<Tag> getTags() {
+        return tags;
     }
 
-    public void setSkills(Set<Skill> skills) {
-        this.skills = skills;
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
     }
 
-
-    // Note: Removed matches getter/setter since the field was removed
-    // The relationship is still accessible through Match.user1 and Match.user2
-
-    /**
-     * Get the user's full name
-     * 
-     * @return formatted full name
-     */
     public String getFullName() {
         return firstName + " " + lastName;
     }
 
-    /**
-     * Update the updatedAt timestamp
-     */
     @PreUpdate
     public void preUpdate() {
         this.updatedAt = LocalDateTime.now();
