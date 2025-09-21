@@ -10,10 +10,6 @@ import java.util.Set;
  * Users create portfolio-style profiles to showcase their work and connect with
  * collaborators.
  *
-<<<<<<< HEAD
- * @author Teamo Development Team
-=======
->>>>>>> 408160eb0091f7af97f6b7e05d7cd54e70da892c
  */
 @Entity
 @Table(name = "users")
@@ -41,21 +37,6 @@ public class User {
     @Column
     private String profilePictureUrl;
 
-<<<<<<< HEAD
-    @Column
-    private String location;
-
-    @Column
-    private String website;
-
-    @Column
-    private String linkedin;
-
-    @Column
-    private String github;
-
-=======
->>>>>>> 408160eb0091f7af97f6b7e05d7cd54e70da892c
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
@@ -70,23 +51,12 @@ public class User {
     private List<PortfolioItem> portfolioItems;
 
     @ManyToMany(fetch = FetchType.LAZY)
-<<<<<<< HEAD
-    @JoinTable(name = "user_skills", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "skill_id"))
-    private Set<Skill> skills;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<SwipeAction> swipeActions;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Match> matches;
-=======
     @JoinTable(name = "user_tags", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "tag_id"))
     private Set<Tag> tags;
 
     // Note: Removed the matches relationship mapping since Match entity uses user1/user2 pattern
     // The relationship is still accessible through Match.user1 and Match.user2
     // private List<Match> matches;
->>>>>>> 408160eb0091f7af97f6b7e05d7cd54e70da892c
 
     // Constructors
     public User() {
@@ -158,41 +128,6 @@ public class User {
         this.profilePictureUrl = profilePictureUrl;
     }
 
-<<<<<<< HEAD
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public String getWebsite() {
-        return website;
-    }
-
-    public void setWebsite(String website) {
-        this.website = website;
-    }
-
-    public String getLinkedin() {
-        return linkedin;
-    }
-
-    public void setLinkedin(String linkedin) {
-        this.linkedin = linkedin;
-    }
-
-    public String getGithub() {
-        return github;
-    }
-
-    public void setGithub(String github) {
-        this.github = github;
-    }
-
-=======
->>>>>>> 408160eb0091f7af97f6b7e05d7cd54e70da892c
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
@@ -225,37 +160,6 @@ public class User {
         this.portfolioItems = portfolioItems;
     }
 
-<<<<<<< HEAD
-    public Set<Skill> getSkills() {
-        return skills;
-    }
-
-    public void setSkills(Set<Skill> skills) {
-        this.skills = skills;
-    }
-
-    public List<SwipeAction> getSwipeActions() {
-        return swipeActions;
-    }
-
-    public void setSwipeActions(List<SwipeAction> swipeActions) {
-        this.swipeActions = swipeActions;
-    }
-
-    public List<Match> getMatches() {
-        return matches;
-    }
-
-    public void setMatches(List<Match> matches) {
-        this.matches = matches;
-    }
-
-    /**
-     * Get the user's full name
-     * 
-     * @return formatted full name
-     */
-=======
     public Set<Tag> getTags() {
         return tags;
     }
@@ -264,17 +168,10 @@ public class User {
         this.tags = tags;
     }
 
->>>>>>> 408160eb0091f7af97f6b7e05d7cd54e70da892c
     public String getFullName() {
         return firstName + " " + lastName;
     }
 
-<<<<<<< HEAD
-    /**
-     * Update the updatedAt timestamp
-     */
-=======
->>>>>>> 408160eb0091f7af97f6b7e05d7cd54e70da892c
     @PreUpdate
     public void preUpdate() {
         this.updatedAt = LocalDateTime.now();
