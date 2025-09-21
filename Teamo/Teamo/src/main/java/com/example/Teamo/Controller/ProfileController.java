@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "*") 
+@CrossOrigin(origins = "*")
 public class ProfileController {
 
   private final UserDAO userDAO;
@@ -19,12 +19,12 @@ public class ProfileController {
     this.userDAO = userDAO;
   }
 
-//   @GetMapping("/profiles")
-//   public List<ProfileDTO> getProfiles() {
-//     return userDAO.findByIsActiveTrue().stream()
-//         .map(ProfileMapper::toDto)
-//         .collect(Collectors.toList());
-//   }
+  @GetMapping("/profiles")
+  public List<ProfileDTO> getProfiles() {
+    return userDAO.findByIsActiveTrue().stream()
+        .map(ProfileMapper::toDto)
+        .collect(Collectors.toList());
+  }
 
   @GetMapping("/profile/{id}")
   public ProfileDTO getProfile(@PathVariable Long id) {
@@ -32,10 +32,10 @@ public class ProfileController {
     return ProfileMapper.toDto(u);
   }
 
-//   @GetMapping("/profiles/search")
-//   public List<ProfileDTO> searchByTag(@RequestParam String tag) {
-//     return userDAO.findByTagNameContaining(tag).stream()
-//         .map(ProfileMapper::toDto)
-//         .collect(Collectors.toList());
-//   }
+  @GetMapping("/profiles/search")
+  public List<ProfileDTO> searchByTag(@RequestParam String tag) {
+    return userDAO.findByTagNameContaining(tag).stream()
+        .map(ProfileMapper::toDto)
+        .collect(Collectors.toList());
+  }
 }
