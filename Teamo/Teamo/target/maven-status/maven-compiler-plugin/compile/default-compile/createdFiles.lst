@@ -1,3 +1,4 @@
+com\example\Teamo\Service\PortfolioService.class
 com\example\Teamo\Service\MatchService.class
 com\example\Teamo\DAO\TagDAO.class
 com\example\Teamo\Service\UserService.class

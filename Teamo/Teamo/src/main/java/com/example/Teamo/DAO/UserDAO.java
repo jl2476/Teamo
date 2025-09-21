@@ -55,8 +55,8 @@ public interface UserDAO extends JpaRepository<User, Long> {
            "OR LOWER(u.bio) LIKE LOWER(CONCAT('%', :searchTerm, '%')))")
     List<User> searchUsers(@Param("searchTerm") String searchTerm);
 
-    @Query("SELECT u FROM User u WHERE u.isActive = true ORDER BY u.updatedAt DESC")
-    List<User> findRecentlyActiveUsers(@Param("limit") int limit);
+    //@Query("SELECT u FROM User u WHERE u.isActive = true ORDER BY u.updatedAt DESC")
+    //List<User> findRecentlyActiveUsers(@Param("limit") int limit);
 
     //@Query("SELECT COUNT(m) FROM Match m WHERE (m.user1.id = :userId OR m.user2.id = :userId) AND m.isActive = true")
     //long countMatchesForUser(@Param("userId") Long userId);
