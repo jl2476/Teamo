@@ -1,21 +1,33 @@
+<<<<<<< HEAD
 package com.example.Teamo.controller;
 
 import com.example.Teamo.model.User;
 import com.example.Teamo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+=======
+package com.example.Teamo.Controller;
+
+import com.example.Teamo.Model.User;
+import com.example.Teamo.Model.Tag;
+import com.example.Teamo.Service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+>>>>>>> 408160eb0091f7af97f6b7e05d7cd54e70da892c
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
+<<<<<<< HEAD
 /**
  * REST Controller for User-related operations.
  * Handles user profile management, search, and discovery features.
  *
  * @author Teamo Development Team
  */
+=======
+>>>>>>> 408160eb0091f7af97f6b7e05d7cd54e70da892c
 @RestController
 @RequestMapping("/api/users")
 @CrossOrigin(origins = "*")
@@ -28,11 +40,14 @@ public class UserController {
         this.userService = userService;
     }
 
+<<<<<<< HEAD
     /**
      * Get user profile by ID
      * @param userId the user ID
      * @return user profile
      */
+=======
+>>>>>>> 408160eb0091f7af97f6b7e05d7cd54e70da892c
     @GetMapping("/{userId}")
     public ResponseEntity<User> getUser(@PathVariable Long userId) {
         Optional<User> user = userService.findById(userId);
@@ -40,6 +55,7 @@ public class UserController {
                   .orElse(ResponseEntity.notFound().build());
     }
 
+<<<<<<< HEAD
     /**
      * Get current authenticated user's profile
      * @return current user's profile
@@ -56,6 +72,21 @@ public class UserController {
      * @param user the updated user data
      * @return updated user
      */
+=======
+    @GetMapping("/me")
+    public ResponseEntity<User> getCurrentUser() {
+        // TODO: Implement authentication and get current user
+        // For now, return a placeholder - this should be replaced with proper authentication
+        User placeholderUser = new User();
+        placeholderUser.setId(1L);
+        placeholderUser.setEmail("placeholder@example.com");
+        placeholderUser.setFirstName("Placeholder");
+        placeholderUser.setLastName("User");
+        placeholderUser.setBio("This is a placeholder user");
+        return ResponseEntity.ok(placeholderUser);
+    }
+
+>>>>>>> 408160eb0091f7af97f6b7e05d7cd54e70da892c
     @PutMapping("/{userId}")
     public ResponseEntity<User> updateUser(@PathVariable Long userId, @RequestBody User user) {
         try {
@@ -66,17 +97,21 @@ public class UserController {
         }
     }
 
+<<<<<<< HEAD
     /**
      * Search users by name, bio, or location
      * @param query the search query
      * @return list of matching users
      */
+=======
+>>>>>>> 408160eb0091f7af97f6b7e05d7cd54e70da892c
     @GetMapping("/search")
     public ResponseEntity<List<User>> searchUsers(@RequestParam String query) {
         List<User> users = userService.searchUsers(query);
         return ResponseEntity.ok(users);
     }
 
+<<<<<<< HEAD
     /**
      * Get users with complementary skills
      * @param userId the user ID to find complements for
@@ -115,10 +150,25 @@ public class UserController {
      * @param limit maximum number of users to return
      * @return list of recently active users
      */
+=======
+    @GetMapping("/{userId}/complementary")
+    public ResponseEntity<List<User>> getComplementaryUsers(@PathVariable Long userId) {
+        List<User> users = userService.findUsersWithComplementaryTags(userId);
+        return ResponseEntity.ok(users);
+    }
+
+    @GetMapping("/tags/category/{category}")
+    public ResponseEntity<List<User>> getUsersByTagCategory(@PathVariable String category) {
+        List<User> users = userService.findUsersByTagCategory(category);
+        return ResponseEntity.ok(users);
+    }
+
+>>>>>>> 408160eb0091f7af97f6b7e05d7cd54e70da892c
     @GetMapping("/recent")
     public ResponseEntity<List<User>> getRecentlyActiveUsers(@RequestParam(defaultValue = "20") int limit) {
         List<User> users = userService.findRecentlyActiveUsers(limit);
         return ResponseEntity.ok(users);
+<<<<<<< HEAD
     }
 
     /**
@@ -137,6 +187,10 @@ public class UserController {
      * @param userId the user ID
      * @return success response
      */
+=======
+    }                                                                                                                           
+
+>>>>>>> 408160eb0091f7af97f6b7e05d7cd54e70da892c
     @DeleteMapping("/{userId}")
     public ResponseEntity<Void> deactivateUser(@PathVariable Long userId) {
         try {
@@ -147,11 +201,14 @@ public class UserController {
         }
     }
 
+<<<<<<< HEAD
     /**
      * Get user statistics
      * @param userId the user ID
      * @return user statistics
      */
+=======
+>>>>>>> 408160eb0091f7af97f6b7e05d7cd54e70da892c
     @GetMapping("/{userId}/stats")
     public ResponseEntity<UserStats> getUserStats(@PathVariable Long userId) {
         // TODO: Implement user statistics
@@ -159,6 +216,7 @@ public class UserController {
         return ResponseEntity.ok(stats);
     }
 
+<<<<<<< HEAD
     /**
      * Get users by multiple skill names
      * @param skillNames comma-separated list of skill names
@@ -174,6 +232,15 @@ public class UserController {
     /**
      * Simple DTO for user statistics
      */
+=======
+    @GetMapping("/tags")
+    public ResponseEntity<List<User>> getUsersByTags(@RequestParam String tagNames) {
+        String[] tags = tagNames.split(",");
+        List<User> users = userService.findUsersByTags(tags);
+        return ResponseEntity.ok(users);
+    }
+
+>>>>>>> 408160eb0091f7af97f6b7e05d7cd54e70da892c
     public static class UserStats {
         private int totalPortfolioItems;
         private int totalMatches;

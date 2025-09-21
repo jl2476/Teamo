@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 package com.example.Teamo.dao;
+=======
+package com.example.Teamo.DAO;
+>>>>>>> 408160eb0091f7af97f6b7e05d7cd54e70da892c
 
 import com.example.Teamo.Model.Match;
 import com.example.Teamo.Model.User;

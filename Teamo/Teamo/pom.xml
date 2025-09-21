@@ -6,13 +6,21 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.5.6</version>
+<<<<<<< HEAD
 		<relativePath/> <!-- lookup parent from repository -->
+=======
+		<relativePath/> 
+>>>>>>> 408160eb0091f7af97f6b7e05d7cd54e70da892c
 	</parent>
 	<groupId>com.example</groupId>
 	<artifactId>Teamo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Teamo</name>
+<<<<<<< HEAD
 	<description>SkillSwipe is a Tinder-inspired platform for professionals and creatives to showcase their skills, connect with collaborators, and bring projects to life. Users create a portfolio-style profile with snippets of their best work, tag their expertise, and scroll through other portfolios in a short-form, swipeable feed.  Whether you’re a game designer seeking a developer, a writer looking for an illustrator, or a musician needing a producer, SkillSwipe makes it easy to discover talent, match with collaborators, and start working together. Search by skills, industries, or project type, then swipe through potential matches and connect instantly.</description>
+=======
+	<description>Teamo is a Tinder-inspired platform for professionals and creatives to showcase their skills, connect with collaborators, and bring projects to life. Users create a portfolio-style profile with snippets of their best work, tag their expertise, and scroll through other portfolios in a short-form, swipeable feed.  Whether you’re a game designer seeking a developer, a writer looking for an illustrator, or a musician needing a producer, SkillSwipe makes it easy to discover talent, match with collaborators, and start working together. Search by skills, industries, or project type, then swipe through potential matches and connect instantly.</description>
+>>>>>>> 408160eb0091f7af97f6b7e05d7cd54e70da892c
 	<url/>
 	<licenses>
 		<license/>
@@ -30,11 +38,31 @@
 		<java.version>17</java.version>
 	</properties>
 	<dependencies>
+<<<<<<< HEAD
+=======
+	
+>>>>>>> 408160eb0091f7af97f6b7e05d7cd54e70da892c
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
 		</dependency>
+<<<<<<< HEAD
 
+=======
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+>>>>>>> 408160eb0091f7af97f6b7e05d7cd54e70da892c
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -43,6 +71,11 @@
 	</dependencies>
 
 	<build>
+<<<<<<< HEAD
+=======
+		<sourceDirectory>src/main/java</sourceDirectory>
+		<testSourceDirectory>src/test/java</testSourceDirectory>
+>>>>>>> 408160eb0091f7af97f6b7e05d7cd54e70da892c
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
@@ -51,4 +84,8 @@
 		</plugins>
 	</build>
 
+<<<<<<< HEAD
 </project>
+=======
+</project>
+>>>>>>> 408160eb0091f7af97f6b7e05d7cd54e70da892c
