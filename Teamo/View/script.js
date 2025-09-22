@@ -1,74 +1,61 @@
 const cardViewer = document.getElementById('cardViewer');
 
-const tags = [
-  { role: ['web developer', 'frontend developer', '3D artist', 'animator']
-  },
-  { tools: ['blender', 'maya','adobe suite','photoshop']
-  },
-  { vibes: ['cute','horror','cool','punk']
-  },
-]
+const API_BASE = 'http://localhost:8080/api';
 
-const profiles = [
-  { id: 1,
-    name: 'Alice Johnson',
-    title: 'Frontend Developer',
-    bio: 'Loves building sleek user interfaces.',
-    avatar: 'https://i.pravatar.cc/150?img=1',
-    banner: 'https://placehold.co/1000x400',
-    tags: ['tag1','tag2','tag3','tag4','tag5'],
-    portfolio_imgs: ['https://placehold.co/600x400','https://placehold.co/600x400','https://placehold.co/600x400','https://placehold.co/600x400','https://placehold.co/600x400'],
-    projects: [] ,
-    followers: [],
-  },
-  { id: 2,
-    name: 'Bob Smith',
-    title: 'Backend Engineer',
-    bio: 'Passionate about server-side logic.',
-    avatar: 'https://i.pravatar.cc/150?img=2',
-    banner: 'https://placehold.co/1000x400',
-    tags: ['tag1','tag2','tag3','tag4','tag5'],
-    portfolio_imgs: ['https://placehold.co/600x400','https://placehold.co/600x400','https://placehold.co/600x400','https://placehold.co/600x400','https://placehold.co/600x400'],
-    projects: [] ,
-    followers: [],
-  },
-  { id: 3,
-    name: 'Charlie Rose',
-    title: 'UX Designer',
-    bio: 'Crafts experiences with empathy.',
-    avatar: 'https://i.pravatar.cc/150?img=3',
-    banner: 'https://placehold.co/1000x400',
-    tags: ['tag1','tag2','tag3','tag4','tag5'],
-    portfolio_imgs: ['https://placehold.co/600x400','https://placehold.co/600x400','https://placehold.co/600x400','https://placehold.co/600x400','https://placehold.co/600x400'],
-    projects: [] ,
-    followers: [],
-  },
-  { id: 4,
-    name: 'Dana Waterboard',   
-    title: 'UI Designer',
-    bio: 'Crafts visuals yada yada.',
-    avatar: 'https://i.pravatar.cc/150?img=4',
-    banner: 'https://placehold.co/1000x400',
-    tags: ['tag1','tag2','tag3','tag4','tag5'],
-    portfolio_imgs: ['https://placehold.co/600x400','https://placehold.co/600x400','https://placehold.co/600x400','https://placehold.co/600x400','https://placehold.co/600x400'],
-    projects: [] ,
-    followers: [],
-  },
-  { id: 5,
-    name: 'Eli Steverstein', 
-    title: 'Game Dev',
-    bio: 'Crafts experiences with hamsters.',
-    avatar: 'https://i.pravatar.cc/150?img=5',
-    banner: 'https://placehold.co/1000x400',
-    tags: ['tag1','tag2','tag3','tag4','tag5'],
-    portfolio_imgs: ['https://placehold.co/600x400','https://placehold.co/600x400','https://placehold.co/600x400','https://placehold.co/600x400','https://placehold.co/600x400'],
-    projects: [] ,
-    followers: [],
-  },
-];
+
+// async function apiGet(path) {
+//   const res = await fetch(`${API_BASE}${path}`, {
+//     headers: { 'Accept': 'application/json' }
+//   });
+//   if (!res.ok) throw new Error(`HTTP ${res.status}`);
+//   return res.json();
+// }
+
+async function apiGet(path) {
+  const url = `${API_BASE}${path}`;
+  try {
+    const res = await fetch(url, { headers: { 'Accept': 'application/json' } });
+    const text = await res.text();
+    console.log('API response', res.status, url, text.slice(0, 300));
+    if (!res.ok) throw new Error(`HTTP ${res.status}: ${text}`);
+    try {
+      return JSON.parse(text);
+    } catch (e) {
+      throw new Error('Response was not valid JSON');
+    }
+  } catch (e) {
+    console.error('Fetch failed for', url, e);
+    throw e;
+  }
+}
+
+
+function mapProfileDTO(p) {
+  return {
+    id: p.id,
+    name: p.name,
+    title: p.title,
+    bio: p.bio,
+    avatar: p.avatar,
+    banner: p.banner,
+    tags: Array.isArray(p.tags) ? p.tags : [],
+    portfolio_imgs: Array.isArray(p.portfolio_imgs) ? p.portfolio_imgs : [],
+    //projects: new Array(p.projects || 0).fill(0),
+    //followers: new Array(p.followers || 0).fill(0),
+  };
+}
+
+async function fetchAllProfiles() {
+  const data = await apiGet('/profiles');
+  return data.map(mapProfileDTO);
+}
+
+async function fetchProfilesByTag(tag) {
+  const data = await apiGet(`/profiles/search?tag=${encodeURIComponent(tag)}`);
+  return data.map(mapProfileDTO);
+}
 
 // tag selection section start
-
 const toggleBtn = document.getElementById('toggle-btn');
 const tagSection = document.getElementById('tag-section');
 const tagSearch = document.getElementById('tag-search');
@@ -76,7 +63,6 @@ const selectedTagsContainer = document.getElementById('selected-tags');
 
 // Predefined sample tags for search simulation
 const availableTags = ['JavaScript', 'HTML', 'CSS', 'React', 'Vue', 'Node.js'];
-
 let selectedTags = [];
 
 toggleBtn.addEventListener('click', () => {
@@ -85,14 +71,15 @@ toggleBtn.addEventListener('click', () => {
 });
 
 // Listen for Enter key in search input
-tagSearch.addEventListener('keypress', (e) => {
+tagSearch.addEventListener('keypress', async (e) => {
   if (e.key === 'Enter') {
     const query = tagSearch.value.trim();
     if (query && availableTags.includes(query) && !selectedTags.includes(query)) {
       selectedTags.push(query);
-      updateSelectedTags();
-      tagSearch.value = '';
+      updateSelectedTags(); 
     }
+    tagSearch.value = '';
+    await loadProfiles(query);
   }
 });
 
@@ -106,18 +93,35 @@ function updateSelectedTags() {
   });
 
   document.querySelectorAll('.remove').forEach(btn => {
-    btn.addEventListener('click', () => {
+    btn.addEventListener('click', async () => {
       const tagToRemove = btn.getAttribute('data-tag');
       selectedTags = selectedTags.filter(t => t !== tagToRemove);
       updateSelectedTags();
+      await loadProfiles(selectedTags.at(-1) || null);
     });
   });
 }
 
 // tag selection section end
 
+let profiles = []; 
 let currentIndex = 0;
 const cardHeight = 220; // 200px card + 20px margin
+
+async function loadProfiles(tag = null) {
+  try {
+    profiles = tag ? await fetchProfilesByTag(tag) : await fetchAllProfiles();
+    currentIndex = 0;
+    renderCardsWindow();
+    renderProfileWindow();
+  } catch (err) {
+    console.error('Failed to load profiles:', err);
+    const detailContainer = document.getElementById('profile-detail');
+    if (detailContainer) {
+      detailContainer.innerHTML = '<p style="color:#c00">Failed to load profiles.</p>';
+    }
+  }
+}
 
 function renderCardsWindow() {
   cardViewer.innerHTML = '';
@@ -224,7 +228,8 @@ const detailContainer = document.getElementById('profile-detail');
 
   let galleryHTML = '';
   for (let i = 0; i < profile.portfolio_imgs.length; i++) {
-    galleryHTML += `<div class="gallery__item">${profile.portfolio_imgs[i]}</div>`;
+    const url = profile.portfolio_imgs[i];
+    galleryHTML += `<div class="gallery__item"><img src="${url}" alt="portfolio ${i+1}"></div>`;
   }
 
   detailContainer.innerHTML = `
@@ -239,7 +244,7 @@ const detailContainer = document.getElementById('profile-detail');
         </div>
         <div>
           <h1 class="profile__name">${profile.name} | ${profile.title}</h1>
-          <p class="profile__stats">Projects: ${profile.projects.length} | Followers: ${profile.followers.length} <button>Message</button></p>
+          // <p class="profile__stats">Projects:  | Followers:  <button>Message</button></p>
         </div>
       </div>
       </div>
@@ -250,8 +255,8 @@ const detailContainer = document.getElementById('profile-detail');
   `;
 }
 
-renderCardsWindow();
-renderProfileWindow();
+// renderCardsWindow();
+// renderProfileWindow();
 
 // Scroll interaction
 let scrollTimeout;
@@ -283,4 +288,9 @@ document.addEventListener('keydown', (e) => {
   } else if (e.key === 'ArrowUp') {
     moveToPrevCard();
   }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  // initial load — all active profiles
+  loadProfiles();
 });
