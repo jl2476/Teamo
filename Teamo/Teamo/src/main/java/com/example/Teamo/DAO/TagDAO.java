@@ -15,5 +15,7 @@ public interface TagDAO extends JpaRepository<Tag, Long>{
 
     List<Tag> findByCategory(String category);
 
+    List<Tag> findByNameContainingIgnoreCase(String query);
+
     
 }

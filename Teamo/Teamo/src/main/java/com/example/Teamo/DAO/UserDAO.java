@@ -35,7 +35,14 @@ public interface UserDAO extends JpaRepository<User, Long> {
     @Query("SELECT u FROM User u JOIN u.tags s WHERE LOWER(s.name) LIKE LOWER(CONCAT('%', :tagName, '%'))")
     List<User> findByTagNameContaining(@Param("tagName") String tagName);
 
-    @Query("SELECT u FROM User u JOIN u.tags s WHERE s IN :tags")
+    @Query("""
+    SELECT u, COUNT(s) AS matches
+    FROM User u
+    JOIN u.tags s
+    WHERE s IN :tags
+    GROUP BY u
+    ORDER BY matches DESC
+    """)
     List<User> findByTagsIn(@Param("tags") Set<Tag> tags);
 
     @Query("SELECT u FROM User u JOIN u.tags s WHERE LOWER(s.category) IN :categories")
@@ -43,11 +50,6 @@ public interface UserDAO extends JpaRepository<User, Long> {
 
     @Query("SELECT u FROM User u WHERE u.id != :userId AND u.isActive = true")
     List<User> findOtherActiveUsers(@Param("userId") Long userId);
-
-    @Query("SELECT DISTINCT u FROM User u JOIN u.tags s " +
-           "WHERE u.id != :userId AND u.isActive = true " +
-           "AND s.category NOT IN (SELECT s2.category FROM User u2 JOIN u2.tags s2 WHERE u2.id = :userId)")
-    List<User> findUsersWithComplementaryTags(@Param("userId") Long userId);
 
     @Query("SELECT u FROM User u WHERE u.isActive = true " +
            "AND (LOWER(u.firstName) LIKE LOWER(CONCAT('%', :searchTerm, '%')) " +

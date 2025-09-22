@@ -51,14 +51,6 @@ public class UserService {
         return userDAO.searchUsers(query);
     }
 
-    public List<User> findUsersWithComplementaryTags(Long userId) {
-        return userDAO.findUsersWithComplementaryTags(userId);
-    }
-
-    public List<User> findUsersByTagCategory(String category) {
-        return userDAO.findByTagCategoriesIn(Set.of(category.toLowerCase()));
-    }
-
     // public List<User> findRecentlyActiveUsers(int limit) {
     //     List<User> users = userDAO.findRecentlyActiveUsers(limit);
     //     return users.stream().limit(limit).collect(Collectors.toList());

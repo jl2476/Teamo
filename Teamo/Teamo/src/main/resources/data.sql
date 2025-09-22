@@ -108,3 +108,22 @@ MERGE INTO portfolio_items (user_id, title, description, image_url) KEY(user_id,
 ((SELECT id FROM users WHERE email = 'es123@gmail.com'), 'Project 1', 'test','https://placehold.co/600x400'),
 ((SELECT id FROM users WHERE email = 'es123@gmail.com'), 'Project 2', 'test','https://placehold.co/600x400'),
 ((SELECT id FROM users WHERE email = 'es123@gmail.com'), 'Project 3', 'test','https://placehold.co/600x400');
+
+
+MERGE INTO user_tags (user_id, tag_id) KEY(user_id, tag_id) VALUES
+((SELECT id FROM users WHERE email = 'admin@gmail.com'), (SELECT id FROM tags WHERE name = 'Digital Art')),
+((SELECT id FROM users WHERE email = 'admin@gmail.com'), (SELECT id FROM tags WHERE name = 'Web Development'));
+
+MERGE INTO user_tags (user_id, tag_id) KEY(user_id, tag_id) VALUES
+((SELECT id FROM users WHERE email = 'tester@yahoo.com'), (SELECT id FROM tags WHERE name = 'Web Development')),
+((SELECT id FROM users WHERE email = 'tester@yahoo.com'), (SELECT id FROM tags WHERE name = 'Game Development'));
+
+MERGE INTO user_tags (user_id, tag_id) KEY(user_id, tag_id) VALUES
+((SELECT id FROM users WHERE email = 'cr123@gmail.com'), (SELECT id FROM tags WHERE name = 'Digital Art')),
+((SELECT id FROM users WHERE email = 'cr123@gmail.com'), (SELECT id FROM tags WHERE name = 'Game Development'));
+
+MERGE INTO user_tags (user_id, tag_id) KEY(user_id, tag_id) VALUES
+((SELECT id FROM users WHERE email = 'dwUI@gmail.com'), (SELECT id FROM tags WHERE name = 'Digital Art'));
+
+MERGE INTO user_tags (user_id, tag_id) KEY(user_id, tag_id) VALUES
+((SELECT id FROM users WHERE email = 'es123@gmail.com'), (SELECT id FROM tags WHERE name = 'Game Development'));
