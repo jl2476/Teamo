@@ -31,19 +31,19 @@ public class User {
     @Column(nullable = false)
     private String lastName;
 
+    @Column(length = 100)
+    private String title;
+
     @Column(length = 500)
     private String bio;
 
     @Column
     private String profilePictureUrl;
 
-    @Column(nullable = false)
-    private LocalDateTime createdAt;
+    @Column
+    private String bannerUrl;
 
     @Column
-    private LocalDateTime updatedAt;
-
-    @Column(nullable = false)
     private boolean isActive = true;
 
     // Relationships
@@ -67,8 +67,6 @@ public class User {
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.createdAt = LocalDateTime.now();
-        this.updatedAt = LocalDateTime.now();
     }
 
     // Getters and Setters
@@ -112,6 +110,14 @@ public class User {
         this.lastName = lastName;
     }
 
+    public String getTitle(){
+        return title;
+    }
+
+    public void setTItle(String title){
+        this.title = title;
+    }
+
     public String getBio() {
         return bio;
     }
@@ -128,20 +134,12 @@ public class User {
         this.profilePictureUrl = profilePictureUrl;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
+    public String getBannerUrl() {
+        return bannerUrl;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
+    public void setBannerUrl(String bannerUrl) {
+        this.bannerUrl = bannerUrl;
     }
 
     public boolean isActive() {
@@ -172,8 +170,4 @@ public class User {
         return firstName + " " + lastName;
     }
 
-    @PreUpdate
-    public void preUpdate() {
-        this.updatedAt = LocalDateTime.now();
-    }
 }
