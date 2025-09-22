@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Teamo.DTO.TagDTO;
 import com.example.Teamo.Service.TagService;
-import com.example.Teamo.Model.Tag;
 
 import java.util.List;
 

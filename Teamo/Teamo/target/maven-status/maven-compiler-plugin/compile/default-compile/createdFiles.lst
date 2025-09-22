@@ -1,6 +1,7 @@
 com\example\Teamo\Service\PortfolioService.class
 com\example\Teamo\DAO\TagDAO.class
 com\example\Teamo\Model\Tag.class
+com\example\Teamo\Controller\AuthController$LoginRequest.class
 com\example\Teamo\Config.class
 com\example\Teamo\Mapper\PortfolioMapper.class
 com\example\Teamo\Controller\PortfolioController.class
@@ -21,6 +22,7 @@ com\example\Teamo\Service\TagService.class
 com\example\Teamo\Model\User.class
 com\example\Teamo\Controller\TagController.class
 com\example\Teamo\Model\PortfolioItem.class
+com\example\Teamo\Controller\AuthController.class
 com\example\Teamo\Mapper\ProfileMapper.class
 com\example\Teamo\DAO\PortfolioDAO.class
 com\example\Teamo\DTO\ProfileDTO.class

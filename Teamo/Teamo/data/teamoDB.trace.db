@@ -1,0 +1,9 @@
+2025-09-21 20:57:05.610333-04:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "[*]WHERE u.first_name = 'Alice'"; SQL statement:
+WHERE u.first_name = 'Alice' [42000-232]
+2025-09-21 20:57:34.705263-04:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "[*]WHERE u.first_name = 'Alice'"; SQL statement:
+WHERE u.first_name = 'Alice' [42000-232]
+2025-09-21 20:57:35.287308-04:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "[*]WHERE u.first_name = 'Alice'"; SQL statement:
+WHERE u.first_name = 'Alice' [42000-232]
