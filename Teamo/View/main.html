@@ -21,9 +21,10 @@
     <div class="sidebar">
       <div id="tag-section" class="collapsed">
       <div class="header">
+        <input type="text" id="tag-search" placeholder="Search tags..." autocomplete="off" />
         <button id="toggle-btn">Edit Tags</button>
-        <input type="text" id="tag-search" placeholder="Search tags...">
       </div>
+      <ul id="suggestions" class="suggestions-list"></ul>
 
       <div class="selected-tags" id="selected-tags">
         <!-- Tags will appear here -->
@@ -39,19 +40,9 @@
         </select>
       </div>
     </div>
-
-      <!-- <div class="sidebar__edit-tags">
-        <div> 
-            <button>Edit Tags</button>
-            <div class="Tag__search">
-                <input type="text" placeholder="Search..." />
-            </div>
-        </div>
-      </div> -->
-
         <div class="card-container">
           <div class="card-viewer" id="cardViewer">
-            <!-- Profile cards will be inserted here -->
+            <!-- Profile cards will be inserted here from js file -->
           </div>
         </div>
       </div>
@@ -59,25 +50,9 @@
     </div>
 
     <section class="profile_view">
-      <div id="profile-detail"></div>
-      <!-- <div class="profile__banner">Banner</div>
-      <div class="profile__info">
-        <div class="profile__avatar"></div>
-        <div>
-          <h1 class="profile__name">NAME</h1>
-          <p>Projects: 3 | Followers: 10 <button>Message</button></p>
-          <p class="profile__tagline">Hi! Aspiring Designer</p>
-        </div>
+      <div id="profile-detail">
+        <!-- Profile details will be inserted here from js file -->
       </div>
-
-      <div class="gallery">
-        <div class="gallery__item">IMG</div>
-        <div class="gallery__item">IMG</div>
-        <div class="gallery__item">IMG</div>
-        <div class="gallery__item">IMG</div>
-        <div class="gallery__item">IMG</div>
-        <div class="gallery__item">IMG</div>
-      </div> -->
     </section>
   </main>
   <script src="script.js"></script>

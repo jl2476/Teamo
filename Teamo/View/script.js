@@ -60,11 +60,13 @@ const toggleBtn = document.getElementById('toggle-btn');
 const tagSection = document.getElementById('tag-section');
 const tagSearch = document.getElementById('tag-search');
 const selectedTagsContainer = document.getElementById('selected-tags');
+const suggestionsList = document.getElementById('suggestions');
 
 // Predefined sample tags for search simulation
-const availableTags = ['JavaScript', 'HTML', 'CSS', 'React', 'Vue', 'Node.js'];
+const availableTags = ['Frontend Developer', 'Backend Developer', 'Developer','JavaScript', 'HTML', 'CSS', 'React', 'Vue', 'Node.js'];
 let selectedTags = [];
 
+// Click button to expand area
 toggleBtn.addEventListener('click', () => {
   tagSection.classList.toggle('expanded');
   tagSection.classList.toggle('collapsed');
@@ -73,6 +75,7 @@ toggleBtn.addEventListener('click', () => {
 // Listen for Enter key in search input
 tagSearch.addEventListener('keypress', async (e) => {
   if (e.key === 'Enter') {
+    e.preventDefault();
     const query = tagSearch.value.trim();
     if (query && availableTags.includes(query) && !selectedTags.includes(query)) {
       selectedTags.push(query);
@@ -80,6 +83,25 @@ tagSearch.addEventListener('keypress', async (e) => {
     }
     tagSearch.value = '';
     await loadProfiles(query);
+  }
+});
+
+// // Listen for Enter key in search input
+// tagSearch.addEventListener('keypress', (e) => {
+//   if (e.key === 'Enter') {
+//     const query = tagSearch.value.trim();
+//     if (query && availableTags.includes(query) && !selectedTags.includes(query)) {
+//       selectedTags.push(query);
+//       updateSelectedTags();
+//       tagSearch.value = '';
+//     }
+//   }
+// });
+
+// Hide suggestions when clicking outside
+document.addEventListener('click', (e) => {
+  if (!suggestionsList.contains(e.target) && e.target !== tagSearch) {
+    suggestionsList.innerHTML = '';
   }
 });
 
@@ -247,13 +269,72 @@ const detailContainer = document.getElementById('profile-detail');
           // <p class="profile__stats">Projects:  | Followers:  <button>Message</button></p>
         </div>
       </div>
+      <div>
+        <h1 class="profile__name">${profile.name} | ${profile.title}</h1>
+        <p class="profile__stats">Projects:  | Followers:  <button>Message</button></p>
       </div>
-      <p class="profile__tagline">${profile.bio}</p>
-      <div class="gallery">
-          ${galleryHTML}
-      </div> 
+    </div>
+    </div>
+    <p class="profile__tagline">${profile.bio}</p>
+    <div class="gallery">
+        ${galleryHTML}
+    </div> 
+    <div id="imageModal" class="modal">
+      <span class="close-btn">&times;</span>
+      <div class="parent">
+        <img class="modal-content" id="fullImage" />
+        <!-- <div id="caption">aaaa</div> -->
+      </div>
+    </div>
   `;
-}
+      // Add expand-on-click gallery img functionality
+    // const galleryItems = document.querySelectorAll('.gallery__item');
+
+    // galleryItems.forEach(item => {
+    //   item.addEventListener('click', () => {
+    //     item.classList.toggle('expanded');
+    //   });
+    // });
+    // Get the modal and its elements
+    const modal = document.getElementById("imageModal");
+    const fullImage = document.getElementById("fullImage");
+    // const caption = document.getElementById("caption");
+    const closeBtn = document.querySelector(".close-btn");
+    const galleryImages = document.querySelectorAll(".gallery img");
+
+    // Click event listener to each gallery image
+    galleryImages.forEach(image => {
+      image.addEventListener("click", () => {
+        // Get full image path from the data-full attribute
+        const fullImagePath = image.getAttribute('src');
+
+        // Update the modal's image source
+        fullImage.src = fullImagePath;
+        const imgSrcToFind = fullImagePath;
+        // const capt_item = profile.portfolio_imgs.find(img => img.img_src === imgSrcToFind);
+        // let captionHTML = '';
+        // captionHTML += `
+        //   <p> 
+        //   ${capt_item.title} ${capt_item.desc}
+        //   </p>
+        // `;
+        // Show modal
+        modal.style.display = "block";
+      });
+    });
+    // Close modal when close button clicked
+    closeBtn.addEventListener("click", () => {
+      modal.style.display = "none";
+    });
+
+    // Close modal if clicks anywhere outside image
+    window.addEventListener("click", (event) => {
+      if (event.target === modal) {
+        modal.style.display = "none";
+      }
+    });
+
+    }
 
 // renderCardsWindow();
 // renderProfileWindow();
