@@ -29,6 +29,15 @@ async function apiGet(path) {
   }
 }
 
+async function loadAvailableTags() {
+  try {
+    const data = await apiGet('/tags'); // already parsed JSON
+    return data.map(tag => tag.name);
+  } catch (err) {
+    console.error('Failed to load tags', err);
+  }
+}
+
 
 function mapProfileDTO(p) {
   return {
@@ -63,8 +72,10 @@ const selectedTagsContainer = document.getElementById('selected-tags');
 const suggestionsList = document.getElementById('suggestions');
 
 // Predefined sample tags for search simulation
-const availableTags = ['Frontend Developer', 'Backend Developer', 'Developer','JavaScript', 'HTML', 'CSS', 'React', 'Vue', 'Node.js'];
+let availableTags = [];
 let selectedTags = [];
+
+//console.log(selectedTags);
 
 // Click button to expand area
 toggleBtn.addEventListener('click', () => {
@@ -72,19 +83,40 @@ toggleBtn.addEventListener('click', () => {
   tagSection.classList.toggle('collapsed');
 });
 
-// Listen for Enter key in search input
-tagSearch.addEventListener('keypress', async (e) => {
-  if (e.key === 'Enter') {
-    e.preventDefault();
-    const query = tagSearch.value.trim();
-    if (query && availableTags.includes(query) && !selectedTags.includes(query)) {
-      selectedTags.push(query);
-      updateSelectedTags(); 
-    }
-    tagSearch.value = '';
-    await loadProfiles(query);
+
+tagSearch.addEventListener('input', async () => {
+  const query = tagSearch.value.trim().toLowerCase();
+  if (!query) {
+    suggestions.innerHTML = '';
+    return;
   }
+
+  availableTags = await loadAvailableTags();
+
+  // Filter available tags that match query and are not already selected
+  const filtered = availableTags.filter(tag =>
+    tag.toLowerCase().includes(query) && !selectedTags.includes(tag)
+  );
+
+  // Create <li> elements dynamically inside <ul>
+  suggestions.innerHTML = filtered
+    .map(tag => `<li class="suggestion-item">${tag}</li>`)
+    .join('');
+
+  // Add the click handler to select a tag
+  suggestions.querySelectorAll('.suggestion-item').forEach(li => {
+    li.addEventListener('click', () => {
+      const tag = li.textContent;
+    if (!tag) return;
+      selectedTags.push(tag);
+      updateSelectedTags();
+      suggestions.innerHTML = '';
+      tagSearch.value = '';
+      loadProfiles(selectedTags); // update user list
+    });
+  });
 });
+
 
 // // Listen for Enter key in search input
 // tagSearch.addEventListener('keypress', (e) => {
@@ -128,7 +160,7 @@ function updateSelectedTags() {
 
 let profiles = []; 
 let currentIndex = 0;
-const cardHeight = 220; // 200px card + 20px margin
+const cardHeight = 220; // 220px card + 20px margin
 
 async function loadProfiles(tag = null) {
   try {
@@ -370,6 +402,8 @@ document.addEventListener('keydown', (e) => {
     moveToPrevCard();
   }
 });
+
+
 
 document.addEventListener('DOMContentLoaded', () => {
   // initial load — all active profiles
