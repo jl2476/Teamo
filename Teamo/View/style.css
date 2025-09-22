@@ -1,3 +1,16 @@
+:root{
+  --main: #715AFF;
+  --bgmain: #DED9E2;
+  --txt: #201A23;
+
+  --c1: #DFD6C1;
+  --c2: #D5C0F0;
+  --c3: #9A8A6E;
+  --c4: #9356E0;
+  --c5: #F7C040;
+
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -5,16 +18,17 @@
 }
 
 body {
+  margin: 0;
   font-family: sans-serif;
-  background: #f4f4f4;
-  color: #333;
+  /* background: #f4f4f4; */
+  color: var(--txt);
 }
 
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #222;
+  background: var(--main);
   color: #fff;
   padding: 10px 20px;
 }
@@ -43,13 +57,14 @@ body {
   display: flex;
   height: calc(100vh - 50px);
   overflow: hidden;
+  background-color: var(--bgmain);
 }
 
 
 .sidebar {
   min-width: 300px;
   width: 30%;
-  background: #fff;
+  background: var(--bgmain);
   border-right: 1px solid #ccc;
   display: flex;
   flex-direction: column;
@@ -68,7 +83,6 @@ body {
 }
 
 .profile_card {
-  outline: 2px solid gray;
   max-height: 500px;
   min-height:400px;
   height:fit-content;
