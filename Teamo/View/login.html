@@ -4,25 +4,55 @@
     <title>Spring Boot HTML</title>
     <link rel="stylesheet" type="text/css" href="login.css">
 </head>
-
 <body>
     <div class="login-container">
-        <!--form where to send data and how the data will be sent-->
         <form action="#" method="post">
             <h2 style="margin-bottom:2px">Login</h2>
-                <div class="login-input">
-                    <label for="username">Username</label>
-                    <input type="text"id="username" name="username" placeholder="Enter your username" required>
-                </div>
-                
-                <div class="login-input">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" placeholder="Enter your password" required>
-                </div>
+            <div class="login-input">
+                <label for="email">Email</label>
+                <input type="text" id="email" name="email" placeholder="Enter your email" required>
+            </div>
+            
+            <div class="login-input">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Enter your password" required>
+            </div>
             <button type="submit">Login</button>
-            <p class="sign-up">Don't have an account? <a href="#">Sign up</a></p>
+            <p class="sign-up">Don't have an account? <a href="main.html">Sign up</a></p>
         </form>
-    </div>
-</body>
+</div>
 
+<script>
+  document.querySelector("form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    try {
+      const res = await fetch("http://localhost:8080/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password })
+      });
+
+      if (!res.ok) {
+        const err = await res.text();
+        alert("Login failed: " + err);
+        return;
+      }
+
+      const user = await res.json();
+      console.log("Logged in user:", user);
+
+      localStorage.setItem("user", JSON.stringify(user));
+
+      window.location.href = "main.html";
+    } catch (err) {
+      console.error("Error logging in:", err);
+      alert("Something went wrong. Please try again.");
+    }
+  });
+</script>
+</body>
 </html>

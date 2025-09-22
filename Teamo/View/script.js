@@ -298,12 +298,8 @@ const detailContainer = document.getElementById('profile-detail');
         </div>
         <div>
           <h1 class="profile__name">${profile.name} | ${profile.title}</h1>
-          // <p class="profile__stats">Projects:  | Followers:  <button>Message</button></p>
+          q
         </div>
-      </div>
-      <div>
-        <h1 class="profile__name">${profile.name} | ${profile.title}</h1>
-        <p class="profile__stats">Projects:  | Followers:  <button>Message</button></p>
       </div>
     </div>
     </div>
